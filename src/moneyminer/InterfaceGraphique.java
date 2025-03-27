@@ -118,19 +118,19 @@ public class InterfaceGraphique extends JFrame implements ActionListener {
 
             if (chance < 0.30) {
                 foundItem = "charbon";
-                imagePath = "src\\moneyminer\\img\\Charbon.png"; // Image de charbon
+                imagePath = "res\\img\\Charbon.png"; // Image de charbon
             } else if (chance < 0.55) {
                 foundItem = "fer";
-                imagePath = "src\\moneyminer\\img\\Fer.png"; // Image de fer
+                imagePath = "res\\img\\Fer.png"; // Image de fer
             } else if (chance < 0.80) {
                 foundItem = "or";
-                imagePath = "src\\moneyminer\\img\\Or.png"; // Image d'or
+                imagePath = "res\\img\\Or.png"; // Image d'or
             } else if (chance < 0.95) {
                 foundItem = "émeraude";
-                imagePath = "src\\moneyminer\\img\\Emeraude.png"; // Image d'émeraude
+                imagePath = "res\\img\\Emeraude.png"; // Image d'émeraude
             } else {
                 foundItem = "diamant";
-                imagePath = "src\\moneyminer\\img\\Diamant.png"; // Image de diamant
+                imagePath = "res\\img\\Diamant.png"; // Image de diamant
             }
 
             player.addItem(foundItem);
