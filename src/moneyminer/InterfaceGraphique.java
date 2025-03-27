@@ -6,6 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 import java.util.Random;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 
 public class InterfaceGraphique extends JFrame implements ActionListener {
     private Player player;
@@ -17,6 +21,7 @@ public class InterfaceGraphique extends JFrame implements ActionListener {
     private JButton sellButton;
     private JButton upgradeButton;
     private JButton quitButton;
+    private JPanel imagePanel;
 
     public InterfaceGraphique() {
         player = new Player();
@@ -26,24 +31,21 @@ public class InterfaceGraphique extends JFrame implements ActionListener {
         setTitle("MoneyMiner");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
-        setLocationRelativeTo(null); // Centrer la fenêtre
-        setLayout(new GridBagLayout()); // Utilisation de GridBagLayout pour la mise en page
-        GridBagConstraints gbc = new GridBagConstraints();
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
 
-        // Création d'un JTextArea avec un ScrollPane
+        // Création du JTextArea avec un ScrollPane
         messageArea = new JTextArea();
         messageArea.setEditable(false);
         messageArea.setLineWrap(true);
         messageArea.setWrapStyleWord(true);
         messageArea.setFont(new Font("Arial", Font.PLAIN, 14));
         JScrollPane scrollPane = new JScrollPane(messageArea);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 5;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 1.0;
-        gbc.weighty = 0.8;
-        add(scrollPane, gbc);
+        add(scrollPane, BorderLayout.CENTER);
+
+        imagePanel = new JPanel();
+        imagePanel.setPreferredSize(new Dimension(350, 180));
+        add(imagePanel, BorderLayout.NORTH);
 
         // Panel des boutons
         JPanel buttonPanel = new JPanel();
@@ -60,15 +62,9 @@ public class InterfaceGraphique extends JFrame implements ActionListener {
         buttonPanel.add(upgradeButton);
         buttonPanel.add(quitButton);
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 5;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weighty = 0.2;
-        add(buttonPanel, gbc);
+        add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    // Fonction pour créer un bouton avec des styles personnalisés
     private JButton createButton(String text) {
         JButton button = new JButton(text);
         button.setFont(new Font("Arial", Font.BOLD, 14));
@@ -81,6 +77,19 @@ public class InterfaceGraphique extends JFrame implements ActionListener {
 
     public void updateMessage(String message) {
         messageArea.append(message + "\n");
+    }
+
+    private void displayImage(String imagePath) {
+        imagePanel.removeAll(); // Retire toutes les anciennes images
+        try {
+            BufferedImage img = ImageIO.read(new File(imagePath));
+            JLabel pic = new JLabel(new ImageIcon(img));
+            imagePanel.add(pic);
+        } catch (IOException e) {
+            updateMessage("Erreur lors du chargement de l'image : " + imagePath);
+        }
+        imagePanel.revalidate();
+        imagePanel.repaint();
     }
 
     @Override
@@ -104,22 +113,29 @@ public class InterfaceGraphique extends JFrame implements ActionListener {
         int quantity = player.getCurrentTool().getEfficiency();
 
         for (int i = 0; i < quantity; i++) {
+            String foundItem;
+            String imagePath = "";
+
             if (chance < 0.30) {
-                player.addItem("charbon");
-                updateMessage("Vous avez trouvé du charbon !");
+                foundItem = "charbon";
+                imagePath = "src\\moneyminer\\img\\Charbon.png"; // Image de charbon
             } else if (chance < 0.55) {
-                player.addItem("fer");
-                updateMessage("Vous avez trouvé du fer !");
+                foundItem = "fer";
+                imagePath = "src\\moneyminer\\img\\Fer.png"; // Image de fer
             } else if (chance < 0.80) {
-                player.addItem("or");
-                updateMessage("Vous avez trouvé de l'or !");
+                foundItem = "or";
+                imagePath = "src\\moneyminer\\img\\Or.png"; // Image d'or
             } else if (chance < 0.95) {
-                player.addItem("émeraude");
-                updateMessage("Vous avez trouvé de l'émeraude !");
+                foundItem = "émeraude";
+                imagePath = "src\\moneyminer\\img\\Emeraude.png"; // Image d'émeraude
             } else {
-                player.addItem("diamant");
-                updateMessage("Vous avez trouvé du diamant !");
+                foundItem = "diamant";
+                imagePath = "src\\moneyminer\\img\\Diamant.png"; // Image de diamant
             }
+
+            player.addItem(foundItem);
+            updateMessage("Vous avez trouvé " + foundItem + " !");
+            displayImage(imagePath); // Affiche l'image du minerai trouvé
         }
     }
 
@@ -139,7 +155,7 @@ public class InterfaceGraphique extends JFrame implements ActionListener {
         String[] items = {"charbon", "fer", "or", "émeraude", "diamant"};
 
         for (String item : items) {
-            while (player.hasItem(item)) { // Continue tant que le joueur a cet article
+            while (player.hasItem(item)) {
                 double price = market.sell(item);
                 player.removeItem(item);
                 totalPrice += price;
@@ -147,12 +163,11 @@ public class InterfaceGraphique extends JFrame implements ActionListener {
             }
         }
 
-        // Optionnel : affichez le prix total après la vente de tous les articles
         updateMessage("Prix total de la vente : " + totalPrice + ".");
 
         if (totalPrice > 0) {
             player.addMoney(totalPrice);
-            updateMessage("Vous avez vendu tous vos articles pour un total de " + totalPrice + ". Votre nouveau solde est : " + player.getMoney());
+            updateMessage("Votre nouveau solde est : " + player.getMoney());
         } else {
             updateMessage("Vous n'avez aucun article à vendre.");
         }
