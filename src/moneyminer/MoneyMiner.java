@@ -1,9 +1,8 @@
-package moneyminer; // Classe pour démarrer le jeu.
+package moneyminer;
 
 public class MoneyMiner {
     public static void main(String[] args) {
-        GameEngine game = new GameEngine();
-        game.start();
+        InterfaceGraphique gui = new InterfaceGraphique();
+        gui.setVisible(true);
     }
 }
-

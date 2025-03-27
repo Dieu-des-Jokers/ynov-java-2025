@@ -16,7 +16,7 @@ public class Inventory {
 
     public void removeItem(String item) {
         if (hasItem(item)) {
-            items.put(item, items.get(item) - 100);
+            items.put(item, items.get(item) - 1);
             if (items.get(item) <= 0) {
                 items.remove(item);
             }
@@ -25,11 +25,6 @@ public class Inventory {
 
     public boolean hasItem(String item) {
         return items.containsKey(item) && items.get(item) > 0;
-    }
-
-    public void displayItems() {
-        System.out.println("Votre inventaire :");
-        items.forEach((item, quantity) -> System.out.println(item + ": " + quantity));
     }
 
     public Map<String, Integer> getItems() {

@@ -6,14 +6,9 @@ public class Player {
     private double money;
 
     public Player() {
-            this.inventory = new Inventory();
-            this.money = 0.0;
-            this.currentTool = new Tools("Pelle en bois", 1); // Outil de départ
-    }
-
-    public void showInventory() {
-        inventory.displayItems();
-        System.out.println("Money: " + money);
+        this.inventory = new Inventory();
+        this.money = 0.0;
+        this.currentTool = new Tools("Pelle en bois", 1); // Outil de départ
     }
 
     public void addItem(String item) {
@@ -39,12 +34,11 @@ public class Player {
     public void removeItem(String item) {
         inventory.removeItem(item);
     }
-    // Ajoutez cette méthode pour améliorer l'outil
+
     public boolean upgradeTool(double upgradeCost) {
         if (money >= upgradeCost) {
             money -= upgradeCost;
-            // On pourrait ici améliorer l'outil, par exemple en augmentant son efficacité
-            currentTool = new Tools(currentTool.getName(), currentTool.getEfficiency() + 1); // Augmente l'efficacité
+            currentTool = new Tools(currentTool.getName(), currentTool.getEfficiency() + 1); // Amélioration de l'efficacité
             return true;
         }
         return false;
@@ -52,5 +46,8 @@ public class Player {
 
     public Tools getCurrentTool() {
         return currentTool;
+    }
+
+    public void showInventory() {
     }
 }
