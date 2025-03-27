@@ -139,13 +139,16 @@ public class InterfaceGraphique extends JFrame implements ActionListener {
         String[] items = {"charbon", "fer", "or", "émeraude", "diamant"};
 
         for (String item : items) {
-            if (player.hasItem(item)) {
+            while (player.hasItem(item)) { // Continue tant que le joueur a cet article
                 double price = market.sell(item);
                 player.removeItem(item);
                 totalPrice += price;
                 updateMessage("Vous avez vendu " + item + " pour " + price + ".");
             }
         }
+
+        // Optionnel : affichez le prix total après la vente de tous les articles
+        updateMessage("Prix total de la vente : " + totalPrice + ".");
 
         if (totalPrice > 0) {
             player.addMoney(totalPrice);
