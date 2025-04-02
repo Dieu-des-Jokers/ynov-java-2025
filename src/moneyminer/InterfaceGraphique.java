@@ -174,13 +174,13 @@ public class InterfaceGraphique extends JFrame implements ActionListener {
     }
 
     private void upgradeTool() {
-        double upgradeCost = 50;
-        if (player.upgradeTool(upgradeCost)) {
+        double upgradeCost = 50; if (player.upgradeTool(upgradeCost)) {
             updateMessage("Votre outil a été amélioré !");
         } else {
             updateMessage("Vous n'avez pas assez d'argent pour améliorer votre outil. Il vous manque : " + (upgradeCost - player.getMoney()) + " unités d'argent.");
         }
     }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

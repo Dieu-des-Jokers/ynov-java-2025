@@ -27,7 +27,7 @@ Les joueurs peuvent miner les minéraux suivants :
 - Chaque type de minerai a un taux de drop spécifique, exprimé en pourcentage.
 - Les taux sont aléatoires, ce qui signifie que chaque session de minage peut avoir des résultats différents.
 
-### 4. Déblocage de Nouvelles Mines
+### 4. Déblocage de Nouvelles Mines (en cours de préparation)
 - À mesure que les joueurs collectent des ressources et accumulent de l'expérience, ils débloquent de nouvelles mines à explorer.
 - Chaque nouvelle mine peut contenir des minéraux plus rares et des défis supplémentaires.
 
@@ -37,7 +37,7 @@ Les joueurs peuvent miner les minéraux suivants :
 2. **Miner** : Utilisez votre pelle pour commencer à miner.
 3. **Collecter des ressources** : Récupérez les minéraux que vous trouvez.
 4. **Améliorer vos outils** : Utilisez vos ressources pour acheter de nouveaux outils et améliorer votre efficacité.
-5. **Explorer de nouvelles mines** : Débloquez de nouvelles zones au fur et à mesure de votre progression.
+5. **Explorer de nouvelles mines** (au cours d'une futur mise à jour): Débloquez de nouvelles zones au fur et à mesure de votre progression.
 
 ## Conclusion
 
